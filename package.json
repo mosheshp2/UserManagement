@@ -1,0 +1,26 @@
+{
+  "name": "usermanagement",
+  "version": "1.0.0",
+  "description": "User management Node.js server",
+  "main": "app.ts",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mosheshp2/UserManagement.git"
+  },
+  "author": "Moshe Shpitz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mosheshp2/UserManagement/issues"
+  },
+  "homepage": "https://github.com/mosheshp2/UserManagement#readme",
+  "dependencies": {
+    "@types/node": "^12.0.2",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "@types/mocha": "^5.2.6"
+  }
+}
