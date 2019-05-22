@@ -11,6 +11,21 @@ class UserController {
     public async getAll(): Promise<User[]> {
         return await UserService.getAllUsers();
     }
+
+    public async getUser(userId: number): Promise<User> {
+        return await UserService.getUser(userId);
+    }
+
+    
+    public async updateUser(userId: number,user: User) {
+        await UserService.updateUser(userId, user);
+    }
+
+    public async deleteUser(userId: number) {
+        await UserService.deleteUser(userId);
+    }
+
+    
 }
 
 

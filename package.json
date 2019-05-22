@@ -2,8 +2,9 @@
   "name": "usermanagement",
   "version": "1.0.0",
   "description": "User management Node.js server",
-  "main": "app.ts",
+  "main": "index.ts",
   "scripts": {
+    "start": "tsc && node dist/index",
     "test": "test"
   },
   "repository": {
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/mosheshp2/UserManagement#readme",
   "dependencies": {
     "@types/node": "^12.0.2",
+    "body-parser": "^1.19.0",
     "express": "^4.16.4",
     "node-persist": "^3.0.4"
   },

@@ -4,24 +4,74 @@ const storage = require('node-persist');
 
 class UserService {
     public async init(){
+        await storage.init();
         
-        console.log('starting init');
-        await storage.init( /* options ... */ );
-        await storage.setItem('users', []);
+        let shouldInit = true;
 
-        console.log('storage inited');
+        try{
+            const users = await storage.getItem('users');
+
+            shouldInit = users == null || users.length === 0;
+        }
+        catch {
+            console.log('no storage');
+        }
+    
+        if(shouldInit){
+            await storage.setItem('users', JSON.stringify([]));
+            console.log('storage inited');
+        }
     }
 
     public async addUser(user: User) {
-        const users = await storage.getItem('users');
-        users.push(user);
+        const users = JSON.parse(await storage.getItem('users'));
+        
+        let userId = this.generateId(users.length);
 
-        await storage.setItem('users', users);
+        users.push({ ...user ,userId });
+
+        await storage.setItem('users', JSON.stringify(users));
     }
 
     public async getAllUsers(): Promise<User[]> {
-        return await storage.getItem('users');
+        return JSON.parse(await storage.getItem('users'));
     }
+
+    public async updateUser(userId: number, user: User) {
+        
+        const users = await this.getAllUsers();
+       
+        const userIndex = users.findIndex(user => user.userId === userId);
+
+        const updatedUsers = [
+            ...users.slice(0, userIndex),
+            {...user, userId },
+            ...users.slice(userIndex + 1),
+          ];
+          
+        await storage.setItem('users', JSON.stringify(updatedUsers));
+    }
+
+    public async getUser(userId: number): Promise<User> {
+        const users = await this.getAllUsers();
+
+        return users.filter(user => user.userId === userId)[0];
+    }
+
+    public async deleteUser(userId: number) {
+        
+        const users = await this.getAllUsers();
+       
+        const leftUsers = users.filter(user => user.userId !== userId);
+
+        await storage.setItem('users', JSON.stringify(leftUsers));
+    }
+
+
+    generateId(length: number) :number {
+        return length + 1; 
+    }
+
 }
 
 export default new UserService();
