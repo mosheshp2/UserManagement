@@ -22,3 +22,11 @@ git clone
 
 npm start
 ```
+
+# TODOS: 
+
+-testing
+
+some better usage of the typescript to model the code better.
+
+Moshe Shpitz 
