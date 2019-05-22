@@ -3,7 +3,10 @@ functional user management node.js server
 
 # Usage:
 
-run http requests to the following endpoints
+
+run http requests to the following endpoints:
+
+```
 GET:  /api/user   --------- (to get all users)
 GET:  /api/user/:userId  -- (get specific user)
 POST: /api/user          -- (create user)   
@@ -11,7 +14,7 @@ POST: /api/user          -- (create user)
 PUT:  /api/user/:userId  -- update user
          <BODY: { userName: 'any string', firstName: 'any string' , lastName: 'any string', password: 'anyString' }> 
 DELETE: /api/user/:userId - delete user
-
+```
 # setup
 
 ```
