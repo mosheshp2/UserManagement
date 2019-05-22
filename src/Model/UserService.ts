@@ -1,34 +1,15 @@
 import User from "./User";
-
+import * as btoa from 'btoa';
 const storage = require('node-persist');
 
 class UserService {
-    public async init(){
-        await storage.init();
-        
-        let shouldInit = true;
-
-        try{
-            const users = await storage.getItem('users');
-
-            shouldInit = users == null || users.length === 0;
-        }
-        catch {
-            console.log('no storage');
-        }
-    
-        if(shouldInit){
-            await storage.setItem('users', JSON.stringify([]));
-            console.log('storage inited');
-        }
-    }
-
+   
     public async addUser(user: User) {
         const users = JSON.parse(await storage.getItem('users'));
         
         let userId = this.generateId(users.length);
-
-        users.push({ ...user ,userId });
+        
+        users.push({ ...user, password: btoa(user.password), userId });
 
         await storage.setItem('users', JSON.stringify(users));
     }
@@ -45,7 +26,7 @@ class UserService {
 
         const updatedUsers = [
             ...users.slice(0, userIndex),
-            {...user, userId },
+            {...user, password: btoa(user.password), userId },
             ...users.slice(userIndex + 1),
           ];
           
@@ -67,6 +48,25 @@ class UserService {
         await storage.setItem('users', JSON.stringify(leftUsers));
     }
 
+    public async init(){
+        await storage.init();
+        
+        let shouldInit = true;
+
+        try{
+            const users = await storage.getItem('users');
+
+            shouldInit = users == null || users.length === 0;
+        }
+        catch {
+            console.log('no storage');
+        }
+    
+        if(shouldInit){
+            await storage.setItem('users', JSON.stringify([]));
+            console.log('storage inited');
+        }
+    }
 
     generateId(length: number) :number {
         return length + 1; 
