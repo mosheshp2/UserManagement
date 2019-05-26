@@ -4,18 +4,18 @@ const storage = require('node-persist');
 
 class UserService {
    
+    public async getAllUsers(): Promise<User[]> {
+        return JSON.parse(await storage.getItem('users'));
+    }
+
     public async addUser(user: User) {
-        const users = JSON.parse(await storage.getItem('users'));
+        const users = await this.getAllUsers();
         
         let userId = this.generateId(users.length);
         
         users.push({ ...user, password: btoa(user.password), userId });
 
         await storage.setItem('users', JSON.stringify(users));
-    }
-
-    public async getAllUsers(): Promise<User[]> {
-        return JSON.parse(await storage.getItem('users'));
     }
 
     public async updateUser(userId: number, user: User) {

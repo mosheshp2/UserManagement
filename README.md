@@ -25,8 +25,10 @@ npm start
 
 # TODOS: 
 
--testing
+- testing
 
-some better usage of the typescript to model the code better.
+- swagger for api description
+
+- some better usage of the typescript to model the code better.
 
 Moshe Shpitz 
